@@ -1,5 +1,7 @@
 <?php
 
+$conn = null;
+
 try {
     $conn = new PDO("mysql:host=db;dbname=example", 'example', 'example');
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
