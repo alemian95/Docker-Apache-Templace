@@ -9,9 +9,11 @@ RUN apt-get install -y \
     libpng-dev \
     zip \
     unzip \
-    openssl \
-    cron \
-    supervisor
+    openssl
+
+# RUN apt-get install -y \
+#     cron \
+#     supervisor
 
 # Installing php extensions
 RUN docker-php-ext-install gd zip intl bcmath
@@ -38,19 +40,19 @@ COPY apache2.conf /etc/apache2/conf-enabled/
 COPY php_ini_override.ini /usr/local/etc/php/conf.d/
 
 # Changing files ownership and current user
-# RUN usermod -u 1000 www-data
-# RUN groupmod -g 1000 www-data
+RUN usermod -u 1000 www-data
+RUN groupmod -g 1000 www-data
 
 # Set permissions for SSL files
 # RUN chown -R www-data:www-data /etc/ssl/private
 # RUN chmod -R 700 /etc/ssl/private
 
 # Enable cron
-COPY ./crontab /etc/cron.d/crontab
-RUN chmod 0644 /etc/cron.d/crontab
-RUN /usr/bin/crontab /etc/cron.d/crontab
+# COPY ./crontab /etc/cron.d/crontab
+# RUN chmod 0644 /etc/cron.d/crontab
+# RUN /usr/bin/crontab /etc/cron.d/crontab
 
 # Supervisor configuration
-COPY supervisord.conf /etc/supervisor/supervisord.conf
+# COPY supervisord.conf /etc/supervisor/supervisord.conf
 
-CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/supervisord.conf"]
+# CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/supervisord.conf"]
